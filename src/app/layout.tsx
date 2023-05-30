@@ -1,8 +1,5 @@
-import { Inter } from 'next/font/google';
 import Navbar from '../components/Navbar';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
 	title: 'Forum',
@@ -16,9 +13,14 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={`${inter.className} bg-neutral-950`}>
-				<Navbar endpoints={['Threads', 'Profile']} />
-				{children}
+			<body
+				className={`flex min-h-screen flex-col justify-between overflow-auto bg-neutral-950  text-white`}
+			>
+				<Navbar endpoints={['Posts', 'Profile']} />
+				<div className="flex flex-col items-center justify-between p-8 md:p-24 xl:mx-[20%]">
+					{children}
+				</div>
+				<footer className="w-full bg-black p-3 text-sm">Footer</footer>
 			</body>
 		</html>
 	);
