@@ -9,7 +9,7 @@ const Navbar: FC<{ endpoints: string[] }> = ({ endpoints }) => {
 					<Link
 						className="text-neutral-200 transition-colors duration-500 hover:text-white"
 						key={e}
-						href={e}
+						href={e[0].toLowerCase() + e.slice(1)}
 					>
 						{e}
 					</Link>
