@@ -1,17 +1,20 @@
 import Image from 'next/image';
+import userIcon from 'public/user.svg';
 import { FC } from 'react';
 import { User } from '../lib/api';
 
-const User: FC<User> = ({ name }) => {
+const User: FC<User & { size: number; icon?: string }> = ({
+	name,
+	size,
+	icon = userIcon,
+}) => {
 	return (
 		<div className="flex items-center gap-4">
 			<Image
 				className="rounded-full"
-				src={
-					'https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg'
-				}
-				width={50}
-				height={50}
+				src={icon}
+				width={size}
+				height={size}
 				alt={`${name} profile picture`}
 			/>
 			{name}
