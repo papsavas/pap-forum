@@ -1,22 +1,22 @@
 const BASE = 'https://jsonplaceholder.typicode.com'
 
 export type Post = {
-  userId: number,
-  id: number,
+  userId: User['id'],
+  id: string | number,
   title: string,
   body: string
 }
 
 export type Comment = {
   postId: number,
-  id: number
+  id: string | number,
   name: string,
   email: string,
   body: string
 }
 
 export type User = {
-  id: number;
+  id: number | string;
   name: string;
   username: string;
   email: string;
@@ -41,7 +41,9 @@ export type User = {
 
 const fetcher = (endpoint: string) => fetch(`${BASE}/${endpoint}`).then(r => r.json())
 
+export const getPost = (id: Post['id']) => fetcher(`posts/${id}`) as Promise<Post>;
 export const getPosts = () => fetcher(`posts`) as Promise<Post[]>;
 export const getUsers = () => fetcher(`users`) as Promise<User[]>;
-export const getUser = (id: number) => fetcher(`users/${id}`) as Promise<User>;
+export const getUser = (id: User['id']) => fetcher(`users/${id}`) as Promise<User>;
 export const getComments = () => fetcher(`comments`) as Promise<Comment[]>;
+export const getPostComments = (postId: Post['id']) => fetcher(`posts/${postId}/comments`) as Promise<Comment[]>;
