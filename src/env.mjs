@@ -12,4 +12,5 @@ export const env = createEnv({
 		DATABASE_USERNAME: process.env.DATABASE_USERNAME,
 		DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
 	},
+	isServer: typeof window === 'undefined',
 });
