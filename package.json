@@ -7,14 +7,20 @@
 		"build": "next build",
 		"start": "next start",
 		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
-		"lint": "next lint"
+		"lint": "next lint",
+		"db:generate": "drizzle-kit generate:mysql",
+		"db:push": "drizzle-kit push:mysql",
+		"db:check": "drizzle-kit check:mysql",
+		"db:up": "drizzle-kit up:mysql --config=drizzle.config.ts"
 	},
 	"dependencies": {
 		"@planetscale/database": "^1.7.0",
 		"@reduxjs/toolkit": "^1.9.5",
 		"@t3-oss/env-nextjs": "^0.4.0",
 		"autoprefixer": "10.4.14",
+		"dotenv": "^16.1.3",
 		"drizzle-orm": "^0.26.3",
+		"drizzle-zod": "^0.4.2",
 		"next": "13.4.4",
 		"postcss": "8.4.24",
 		"react": "18.2.0",
