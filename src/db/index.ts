@@ -8,5 +8,5 @@ const connection = connect({
   password: process.env["DATABASE_PASSWORD"],
 });
 
-export const db = drizzle(connection, { schema: { ...users, ...posts, ...comments } });
+export const db = drizzle(connection, { schema: { users, posts, comments } });
 
