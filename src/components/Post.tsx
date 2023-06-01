@@ -1,19 +1,17 @@
-import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Comment, getUser } from '../lib/api';
 import User from './User';
 
-//@ts-expect-error async fc
-const Post: FC<
-	{
-		id: string | number;
-		userId: User['id'];
-		title: string;
-		body: string;
-		comments?: Comment[];
-		className?: string;
-	} & XOR<{ root: boolean }, { parentId: string }>
-> = async ({
+type Props = {
+	id: string | number;
+	userId: User['id'];
+	title: string;
+	body: string;
+	comments?: Comment[];
+	className?: string;
+} & XOR<{ root: boolean }, { parentId: string }>;
+
+export default async function Post({
 	title,
 	userId,
 	body,
@@ -21,7 +19,7 @@ const Post: FC<
 	comments,
 	root,
 	parentId,
-}) => {
+}: Props) {
 	const user = await getUser(userId);
 	const hasComments = comments && comments.length > 0;
 	return (
@@ -60,6 +58,4 @@ const Post: FC<
 			</div>
 		</section>
 	);
-};
-
-export default Post;
+}
