@@ -1,5 +1,5 @@
 import { InferModel, relations } from "drizzle-orm";
-import { int, mysqlTable, serial, text, timestamp, varchar, } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, serial, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -10,6 +10,7 @@ export const users = mysqlTable('users', {
   //TODO: set to unique
   username: varchar('username', { length: MAX_USERNAME }).notNull(),
   email: text("email").notNull(),
+  role: mysqlEnum("role", ["admin", "mod", "member", "unregistered"]).notNull(),
   fullName: varchar('full_name', { length: MAX_FULLNAME }).notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   editedAt: timestamp("edited_at").onUpdateNow(),
