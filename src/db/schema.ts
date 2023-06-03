@@ -5,12 +5,13 @@ import { z } from "zod";
 
 const [MAX_USERNAME, MAX_FULLNAME] = [20, 64];
 
+export const userRoles = <const>["admin", "mod", "member", "unregistered"]
 export const users = mysqlTable('users', {
   id: serial('id').primaryKey(),
   //TODO: set to unique
   username: varchar('username', { length: MAX_USERNAME }).notNull(),
   email: text("email").notNull(),
-  role: mysqlEnum("role", ["admin", "mod", "member", "unregistered"]).notNull(),
+  role: mysqlEnum("role", userRoles).notNull(),
   fullName: varchar('full_name', { length: MAX_FULLNAME }).notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   editedAt: timestamp("edited_at").onUpdateNow(),
