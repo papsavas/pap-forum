@@ -5,7 +5,7 @@ import { getPosts } from '../../lib/api';
 export default async function PostsPage() {
 	const posts = await getPosts();
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between gap-10">
+		<main className="flex min-h-screen flex-col justify-between gap-16">
 			{posts.map((p) => (
 				<Link href={`posts/${p.id}`} key={p.id}>
 					<Post
