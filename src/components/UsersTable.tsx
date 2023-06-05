@@ -5,6 +5,7 @@ import {
 	getPaginationRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
+import Link from 'next/link';
 import { FC } from 'react';
 import { DBUser, userRoles } from '../db/schema';
 import Table from './Table';
@@ -19,19 +20,33 @@ const UsersTable: FC<{
 	const columnHelper = createColumnHelper<DBUser>();
 	const columns = [
 		columnHelper.accessor('username', {
-			cell: (info) => info.getValue(),
+			cell: (info) => {
+				const username = info.getValue();
+				return (
+					<Link className="hover:underline" href={`users/${username}`}>
+						{username}
+					</Link>
+				);
+			},
 		}),
 		columnHelper.accessor('fullName', {
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor('email', {
-			cell: (info) => info.getValue(),
+			cell: (info) => {
+				const email = info.getValue();
+				return (
+					<address className="hover:underline">
+						<a href={`mailto:${email}`}>{email}</a>
+					</address>
+				);
+			},
 		}),
 		columnHelper.accessor('role', {
 			cell: (info) => (
 				<select
 					defaultValue={info.getValue()}
-					className="bg-neutral-500"
+					className="cursor-pointer appearance-none rounded-xl border-none bg-neutral-500 px-3 py-1 outline-none"
 					onChange={async (e) => {
 						const username = info.row.getValue(
 							'username'
@@ -41,7 +56,11 @@ const UsersTable: FC<{
 					}}
 				>
 					{userRoles.map((role) => (
-						<option key={role} value={role}>
+						<option
+							className="cursor-pointer  bg-neutral-500 p-2"
+							key={role}
+							value={role}
+						>
 							{role}
 						</option>
 					))}
@@ -64,7 +83,7 @@ const UsersTable: FC<{
 			styles={{
 				table: 'border bg-neutral-950',
 				headCell: 'py-1 font-light opacity-75 capitalize',
-				bodyRow: 'border hover:bg-neutral-900 transition-all duration-100',
+				bodyRow: 'border hover:bg-white/10 transition-all duration-100',
 				cell: 'p-5',
 			}}
 		/>

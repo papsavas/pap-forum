@@ -1,8 +1,9 @@
-import { Table, flexRender } from '@tanstack/react-table';
+import { Row, Table, flexRender } from '@tanstack/react-table';
 import { twMerge } from 'tailwind-merge';
 
 type Props<T> = {
 	table: Table<T>;
+	onRowClick?: (row: Row<T>) => unknown;
 	styles?: Partial<{
 		table: string;
 		head: string;
@@ -14,7 +15,7 @@ type Props<T> = {
 	}>;
 };
 
-export default function Table<T>({ table, styles }: Props<T>) {
+export default function Table<T>({ table, styles, onRowClick }: Props<T>) {
 	return (
 		<table className={twMerge('table-auto text-center', styles?.table)}>
 			<thead className={twMerge('', styles?.head)}>
@@ -33,7 +34,11 @@ export default function Table<T>({ table, styles }: Props<T>) {
 			</thead>
 			<tbody className={twMerge('', styles?.body)}>
 				{table.getRowModel().rows.map((row) => (
-					<tr key={row.id} className={twMerge('', styles?.bodyRow)}>
+					<tr
+						key={row.id}
+						className={twMerge('', styles?.bodyRow)}
+						onClick={(e) => onRowClick && onRowClick(row)}
+					>
 						{row.getVisibleCells().map((cell) => (
 							<td key={cell.id} className={twMerge('', styles?.cell)}>
 								{flexRender(cell.column.columnDef.cell, cell.getContext())}
