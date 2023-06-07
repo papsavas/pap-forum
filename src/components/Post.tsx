@@ -1,10 +1,10 @@
 import { twMerge } from 'tailwind-merge';
 import { Comment, getUser } from '../lib/api';
-import User from './User';
+import PostUser from './PostUser';
 
 type Props = {
 	id: string | number;
-	userId: User['id'];
+	userId: number | string;
 	title: string;
 	body: string;
 	comments?: Comment[];
@@ -33,7 +33,7 @@ export default async function Post({
 		>
 			<div className={`p-4 ${parentId ? 'border-t border-opacity-60' : ''}`}>
 				<div className={`${root ? 'mb-12' : 'mb-2'} flex flex-col gap-4`}>
-					<User {...user} size={root ? 50 : 35} />
+					<PostUser {...user} size={root ? 50 : 35} />
 					<article className={`flex flex-col gap-2`}>
 						<h1 className="text-lg">{title}</h1>
 						<p className="">{body}</p>
