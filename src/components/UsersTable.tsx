@@ -6,9 +6,30 @@ import {
 	useReactTable,
 } from '@tanstack/react-table';
 import Link from 'next/link';
-import { FC } from 'react';
+import { ComponentProps, FC } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { DBUser, userRoles } from '../db/schema';
 import Table from './Table';
+
+const styles = {
+	table: 'bg-neutral-950 w-full',
+	headRow: 'border border-white/40',
+	headCell: 'py-1 font-light opacity-75 capitalize',
+	cell: 'p-5',
+} satisfies ComponentProps<typeof Table>['styles'];
+
+export const UsersTableSkeleton: FC<{ rows: number }> = ({ rows }) => (
+	<Table
+		layout={{ rows, cols: 4 }}
+		styles={{
+			...styles,
+			cell: twMerge(
+				styles.cell,
+				'animate-pulse bg-neutral-900 border border-white/10 p-7'
+			),
+		}}
+	/>
+);
 
 const UsersTable: FC<{
 	users: DBUser[];
@@ -81,10 +102,8 @@ const UsersTable: FC<{
 		<Table
 			table={table}
 			styles={{
-				table: 'border bg-neutral-950',
-				headCell: 'py-1 font-light opacity-75 capitalize',
-				bodyRow: 'border hover:bg-white/10 transition-all duration-100',
-				cell: 'p-5',
+				...styles,
+				bodyRow: 'transition-all duration-100 border border-white/40',
 			}}
 		/>
 	);

@@ -4,7 +4,6 @@ import { assignRoleToUser, getUsers } from '../../db/users';
 export default async function UsersPage() {
 	//TODO: protect page
 	const users = await getUsers();
-
 	return (
 		<UsersTable
 			users={users}
