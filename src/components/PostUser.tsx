@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import userIcon from 'public/user.svg';
 import { FC } from 'react';
-import { User } from '../lib/api';
+import { User as APIUser } from '../lib/api';
 
-const User: FC<User & { size: number; icon?: string }> = ({
+const PostUser: FC<APIUser & { size: number; icon?: string }> = ({
 	name,
 	size,
 	icon = userIcon,
@@ -22,4 +22,4 @@ const User: FC<User & { size: number; icon?: string }> = ({
 	);
 };
 
-export default User;
+export default PostUser;

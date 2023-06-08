@@ -17,22 +17,15 @@ export default function RootLayout({
 			<body
 				className={`flex min-h-screen flex-col justify-between overflow-auto bg-neutral-950  text-white`}
 			>
-				<main>
-					<Navbar
-						endpoints={[
-							{ name: 'Home', path: '/' },
-							'Posts',
-							'Profile',
-							'Users',
-						]}
-					/>
-					<div className="flex flex-col p-6 md:p-24 xl:mx-[20%]">
-						<nav className="mb-16 text-start">
-							<Navpath />
-						</nav>
-						<div className="flex flex-col items-center justify-between">
-							{children}
-						</div>
+				<Navbar
+					endpoints={[{ name: 'Home', path: '/' }, 'Posts', 'Profile', 'Users']}
+				/>
+				<main className="flex flex-1 flex-col px-6 py-3 md:px-24 md:py-12 xl:mx-[20%]">
+					<nav className="mb-16 text-start">
+						<Navpath />
+					</nav>
+					<div className="flex h-full flex-1 flex-col items-center justify-between">
+						{children}
 					</div>
 				</main>
 				<footer className="w-full bg-black p-3 text-sm">Footer</footer>
