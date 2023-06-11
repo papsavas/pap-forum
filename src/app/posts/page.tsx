@@ -1,12 +1,18 @@
 import Link from 'next/link';
 import Post from '../../components/Post';
-import { getPosts } from '../../lib/api';
+import { getPostComments, getPosts } from '../../lib/api';
 
 export default async function PostsPage() {
-	const posts = await getPosts();
+	const postsWithComments = await Promise.all(
+		(
+			await getPosts()
+		).map((post) =>
+			getPostComments(post.id).then((comments) => ({ ...post, comments }))
+		)
+	);
 	return (
 		<main className="flex min-h-screen flex-col justify-between gap-16">
-			{posts.map((p) => (
+			{postsWithComments.map((p) => (
 				<Link href={`posts/${p.id}`} key={p.id}>
 					<Post
 						{...p}

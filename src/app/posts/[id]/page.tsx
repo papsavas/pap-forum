@@ -6,7 +6,7 @@ export default async function PostPage({ params }: SegmentProps) {
 	const post = await getPost(params.id);
 	return (
 		<article className="flex h-full w-full flex-1 flex-col">
-			<Post {...post} root comments={comments} />
+			<Post {...post} root comments={comments} showComments />
 		</article>
 	);
 }

@@ -1,14 +1,17 @@
+import Image from 'next/image';
+import rightCommentIcon from 'public/round-comment-right.svg';
 import { twMerge } from 'tailwind-merge';
-import { Comment, getUser } from '../lib/api';
-import User from './User';
+import { User as APIUser, Comment, getUser } from '../lib/api';
+import PostUser from './PostUser';
 
 type Props = {
 	id: string | number;
-	userId: User['id'];
+	userId: APIUser['id'];
 	title: string;
 	body: string;
 	comments?: Comment[];
 	className?: string;
+	showComments?: boolean;
 } & XOR<{ root: boolean }, { parentId: string }>;
 
 export default async function Post({
@@ -17,6 +20,7 @@ export default async function Post({
 	body,
 	className = '',
 	comments,
+	showComments = false,
 	root,
 	parentId,
 }: Props) {
@@ -31,17 +35,40 @@ export default async function Post({
 				className
 			)}
 		>
-			<div className={`p-4 ${parentId ? 'border-t border-opacity-60' : ''}`}>
-				<div className={`${root ? 'mb-12' : 'mb-2'} flex flex-col gap-4`}>
-					<User {...user} size={root ? 50 : 35} />
-					<article className={`flex flex-col gap-2`}>
-						<h1 className="text-lg">{title}</h1>
-						<p className="">{body}</p>
+			<div
+				className={`px-8 py-6 ${parentId ? 'border-t border-opacity-60' : ''}`}
+			>
+				<div
+					className={`${
+						hasComments && showComments ? 'mb-12' : ''
+					} flex flex-col gap-6`}
+				>
+					<PostUser {...user} size={root ? 50 : 35} />
+					<article
+						className={`flex flex-col justify-evenly gap-6 ${
+							root ? 'px-6' : ''
+						}`}
+					>
+						<div className="flex flex-col gap-2">
+							<h1 className="text-lg">{title}</h1>
+							<p className="">{body}</p>
+						</div>
+						{hasComments && !showComments ? (
+							<footer className="flex items-center gap-1 text-sm">
+								{comments?.length}
+								<Image
+									src={rightCommentIcon}
+									alt="comment icon"
+									height={13}
+									width={13}
+								></Image>
+							</footer>
+						) : null}
 					</article>
 				</div>
 				<div className="">
-					<div className="ml-3 flex flex-col text-sm">
-						{hasComments
+					<div className="flex flex-col text-sm">
+						{hasComments && showComments
 							? comments.map((c) => (
 									<Post
 										id={c.id}
